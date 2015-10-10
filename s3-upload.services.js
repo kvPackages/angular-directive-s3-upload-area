@@ -1,5 +1,5 @@
 angular
-	.module('s3Upload')
+	.module('ngS3Upload')
 
 	.factory('S3Upload', function(){
 		
