@@ -10,7 +10,7 @@ angular
                 errorEmail: '@',
                 errorSubject: '@'
             },
-            templateUrl: 'templates/s3-upload-area-directive.html',
+            templateUrl: 'templates/s3-upload-area.directive.html',
 
             link: function(scope, element, attrs){
 
