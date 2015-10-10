@@ -1,5 +1,5 @@
 angular
-    .module('app.directives', [])
+    .module('s3Upload', [])
 
     .directive('s3UploadArea', function($timeout, S3Upload){
         return {
