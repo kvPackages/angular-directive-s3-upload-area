@@ -1,0 +1,20 @@
+<section class="s3-upload-area"
+         ng-class="{ 's3-upload-area--uploading': helper.uploading }">
+	<div class="s3-upload-area__wrapper">
+
+		<input id="file-input" name="file" type="file" file />
+
+		<div class="s3-upload-area__upload-area"
+		     ng-click="helper.triggerFilePicker()">
+
+			<div><strong>{{ helper.text.title }}</strong></div>
+			<small>{{ helper.text.desc }}</small>
+
+			<div class="s3-upload-area__progress-bar">
+				<div class="s3-upload-area__progress-bar__inner"
+					 ng-style="{ 'width': helper.uploadProgress+'%' }"></div>
+				<small>{{ helper.uploadProgress+'%' }}</small>
+			</div>
+		</div>
+	</div>
+</section>
