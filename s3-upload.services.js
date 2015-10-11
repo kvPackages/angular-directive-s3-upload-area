@@ -11,6 +11,30 @@ angular
 			this._options[key] = val;
 		};
 
+        S3Upload.prototype._genRandStr = function(length){
+            if(typeof length !== 'number') length = 41;
+
+            // Math.random returns number with length between 16 and 18 chars
+
+            //if length below 16 do in one go
+            if(length <= 16){
+                return Math.random().toString(36).substring(2,length+2);
+            }
+
+            //else calculate how many iterations we need
+            var iterations = Math.ceil(length / 16),
+                outputStr = '';
+            
+            for(var i = 0; i < iterations; i++){
+                outputStr += Math.random().toString(36).substring(2,18);
+            }
+
+            //correct length if it's too high
+            if(outputStr.length > length) outputStr = outputStr.substring(0,length);
+
+            return outputStr;
+        };
+
 		S3Upload.prototype.uploadFile = function(file){
 			var options = this._options,
 				creds = options.creds;
@@ -30,12 +54,15 @@ angular
             if(typeof options.onStart === 'function'){
         		options.onStart(file);
         	}
-     
+
+            var randomPrefix = this._genRandStr(),
+                filename = randomPrefix+file.name;
             bucket.putObject({
-                Key: file.name,
+                Key: filename,
                 ContentType: file.type,
                 Body: file,
-                ServerSideEncryption: 'AES256'
+                ServerSideEncryption: 'AES256',
+                ACL: 'public-read'
             }, function(err, data) {
                 if(err){
                     // There Was An Error With Your S3 Config
@@ -46,7 +73,7 @@ angular
                 } else {
                     // Success!
                     if(typeof options.onSuccess === 'function'){
-                		options.onSuccess('https://'+creds.bucket+'.s3.amazonaws.com/'+encodeURIComponent(file.name), file);
+                		options.onSuccess('https://'+creds.bucket+'.s3.amazonaws.com/'+encodeURIComponent(filename), file);
                 	}
                 }
             })

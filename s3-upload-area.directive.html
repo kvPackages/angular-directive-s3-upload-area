@@ -11,7 +11,7 @@
 		     ng-click="helper.triggerFilePicker()">
 
 			<div><strong>{{ helper.text.title }}</strong></div>
-			<small>{{ helper.text.desc }}</small>
+			<small ng-bind-html="helper.text.desc | unsafe"></small>
 
 			<div class="s3-upload-area__progress-bar">
 				<div class="s3-upload-area__progress-bar__inner"
