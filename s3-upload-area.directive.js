@@ -52,11 +52,7 @@ angular
                     }
                 });
 
-                var fileInputEl = angular.element(document.getElementById('file-input'));
-                fileInputEl.bind('change', function(event){
-                    var files = event.target.files,
-                        file = files[0];
-                    
+                var uploadFile = function(file){
                     if(file){
                         s3upload.uploadFile(file);
                     } else {
@@ -66,6 +62,13 @@ angular
                             desc: 'Click here and upload a .mp4 file'
                         };
                     }
+                };
+
+                var fileInputEl = angular.element(document.getElementById('file-input'));
+                fileInputEl.bind('change', function(event){
+                    var files = event.target.files,
+                        file = files[0];
+                    uploadFile(file);
                 });
 
                 scope.helper = {
@@ -75,8 +78,8 @@ angular
                     },
                     uploading: false,
                     uploadProgress: 0,
-                    closeDialog: function(){
-                        location.reload();
+                    onFileDrop: function(files){
+                        uploadFile(files[0]);
                     },
                     triggerFilePicker: function(){
                         if(!scope.helper.uploading){

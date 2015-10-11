@@ -5,6 +5,9 @@
 		<input id="file-input" name="file" type="file" file />
 
 		<div class="s3-upload-area__upload-area"
+			 file-drop
+			 drag-over-class="s3-upload-area__upload-area--dragover"
+			 on-drop="helper.onFileDrop(files)"
 		     ng-click="helper.triggerFilePicker()">
 
 			<div><strong>{{ helper.text.title }}</strong></div>

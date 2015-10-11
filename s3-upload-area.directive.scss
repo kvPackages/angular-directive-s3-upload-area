@@ -9,7 +9,8 @@
 			cursor: initial;
 			border: none;
 
-			&:hover {
+			&:hover,
+			&.s3-upload-area__upload-area--dragover {
 				color: $base-color;
 				border-color: $grey-light;
 			}
@@ -39,7 +40,8 @@
 		cursor: pointer;
 		@include transition((border-color, color));
 
-		&:hover {
+		&:hover,
+		&.s3-upload-area__upload-area--dragover {
 			color: $accent;
 			border-color: $accent;
 		}
