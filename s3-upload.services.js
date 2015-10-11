@@ -55,15 +55,24 @@ angular
         		options.onStart(file);
         	}
 
-            var randomPrefix = this._genRandStr(),
+            var filename = file.name;
+            if(options.addRandomFilenamePrefix){
+                var randomPrefix = this._genRandStr();
                 filename = randomPrefix+file.name;
-            bucket.putObject({
+            }
+
+            var awsReqOptions = {
                 Key: filename,
                 ContentType: file.type,
                 Body: file,
-                ServerSideEncryption: 'AES256',
-                ACL: 'public-read'
-            }, function(err, data) {
+                ServerSideEncryption: 'AES256'
+            };
+
+            if(options.filePermissions){
+                awsReqOptions.ACL = options.filePermissions;
+            }
+
+            bucket.putObject(awsReqOptions, function(err, data) {
                 if(err){
                     // There Was An Error With Your S3 Config
                     if(typeof options.onError === 'function'){
