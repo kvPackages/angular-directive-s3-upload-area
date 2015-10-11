@@ -138,12 +138,12 @@ angular
                     }
                 };
 
-                var fileInputEl = angular.element(document.getElementById('file-input'));
-                fileInputEl.bind('change', function(event){
+                var fileInputEl = element[0].querySelector('#file-input');
+                fileInputEl.addEventListener('change', function(event){
                     var files = event.target.files,
                         file = files[0];
                     uploadFile(file);
-                });
+                }, false);
 
                 scope.helper = {
                     text:{
@@ -157,7 +157,7 @@ angular
                     },
                     triggerFilePicker: function(){
                         if(!scope.helper.uploading){
-                            fileInputEl[0].click();
+                            fileInputEl.click();
                         }
                     }
                 };
