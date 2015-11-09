@@ -48,6 +48,9 @@ angular
             var bucket = new AWS.S3({
                 params: {
                     Bucket: creds.bucket,
+                },
+                httpOptions: {
+                    timeout: (((1000 * 60) * 60) * 24) * 7 //(((1 sec * 60 = 1min) * 60 = 1h) * 24 = 24h) * 7 = 7d
                 }
             });
 
