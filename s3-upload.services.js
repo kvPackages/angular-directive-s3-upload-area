@@ -64,8 +64,6 @@ angular
                 filename = randomPrefix+file.name;
             }
 
-            console.log(creds.path+filename);
-
             var awsReqOptions = {
                 Key: creds.path+filename,
                 ContentType: file.type,
