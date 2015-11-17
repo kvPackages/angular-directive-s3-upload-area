@@ -64,12 +64,13 @@ angular
                 filename = randomPrefix+file.name;
             }
 
-            var awsReqOptions = {
-                Key: options.uploadPath+filename,
-                ContentType: file.type,
-                Body: file,
-                ServerSideEncryption: 'AES256'
-            };
+            var filePath = options.uploadPath+filename,
+                awsReqOptions = {
+                    Key: filePath,
+                    ContentType: file.type,
+                    Body: file,
+                    ServerSideEncryption: 'AES256'
+                };
 
             if(options.filePermissions){
                 awsReqOptions.ACL = options.filePermissions;
@@ -85,7 +86,7 @@ angular
                 } else {
                     // Success!
                     if(typeof options.onSuccess === 'function'){
-                		options.onSuccess('https://'+creds.bucket+'.s3.amazonaws.com/'+encodeURIComponent(filename), file);
+                		options.onSuccess('https://'+creds.bucket+'.s3.amazonaws.com/'+encodeURIComponent(options.uploadPath+filename), file);
                 	}
                 }
             })
