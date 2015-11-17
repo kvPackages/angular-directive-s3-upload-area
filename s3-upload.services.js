@@ -48,6 +48,9 @@ angular
             var bucket = new AWS.S3({
                 params: {
                     Bucket: creds.bucket,
+                },
+                httpOptions: {
+                    timeout: (((1000 * 60) * 60) * 24) * 7 //(((1 sec * 60 = 1min) * 60 = 1h) * 24 = 24h) * 7 = 7d
                 }
             });
 
@@ -61,8 +64,10 @@ angular
                 filename = randomPrefix+file.name;
             }
 
+            console.log(creds.path+filename);
+
             var awsReqOptions = {
-                Key: filename,
+                Key: creds.path+filename,
                 ContentType: file.type,
                 Body: file,
                 ServerSideEncryption: 'AES256'

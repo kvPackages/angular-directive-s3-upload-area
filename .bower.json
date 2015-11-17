@@ -1,0 +1,13 @@
+{
+  "name": "kv-package-angular-directive-s3-upload-area",
+  "homepage": "https://github.com/kvendrik/kv-package-angular-directive-s3-upload-area",
+  "_release": "02fa9b7880",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "02fa9b78808b79f75192a4e1e0d8dabea0afa562"
+  },
+  "_source": "git://github.com/kvendrik/kv-package-angular-directive-s3-upload-area.git",
+  "_target": "*",
+  "_originalSource": "kvendrik/kv-package-angular-directive-s3-upload-area"
+}
