@@ -64,8 +64,10 @@ angular
                 filename = randomPrefix+file.name;
             }
 
+            console.log(options.uploadPath+filename);
+
             var awsReqOptions = {
-                Key: creds.path+filename,
+                Key: options.uploadPath+filename,
                 ContentType: file.type,
                 Body: file,
                 ServerSideEncryption: 'AES256'

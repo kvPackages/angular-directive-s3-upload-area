@@ -13,7 +13,8 @@ angular
                 messages: '=',
                 allowedFileTypes: '@',
                 addRandomFilenamePrefix: '@',
-                filePermissions: '@'
+                filePermissions: '@',
+                uploadPath: '@'
             },
             templateUrl: 'templates/s3-upload-area.directive.html',
 
@@ -69,6 +70,7 @@ angular
 
                 var s3upload = new S3Upload({
                     creds: scope.creds,
+                    uploadPath: scope.uploadPath,
                     addRandomFilenamePrefix: scope.addRandomFilenamePrefix,
                     filePermissions: scope.filePermissions,
                     onStart: function(file){
