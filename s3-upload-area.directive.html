@@ -15,8 +15,11 @@
 
 			<div class="s3-upload-area__progress-bar">
 				<div class="s3-upload-area__progress-bar__inner"
-					 ng-style="{ 'width': helper.uploadProgress+'%' }"></div>
-				<small>{{ helper.uploadProgress+'%' }}</small>
+					 ng-style="{ 'width': helper.uploadProgress.percentage+'%' }"></div>
+				<small>
+					{{ helper.uploadProgress.loadedKb }}kb / {{ helper.uploadProgress.totalKb }}kb<br>
+					{{ helper.uploadProgress.percentage+'%' }}
+				</small>
 			</div>
 		</div>
 	</div>

@@ -45,14 +45,6 @@ angular
             });
 
             AWS.config.region = 'us-east-1';
-            var bucket = new AWS.S3({
-                params: {
-                    Bucket: creds.bucket,
-                },
-                httpOptions: {
-                    timeout: (((1000 * 60) * 60) * 24) * 7 //(((1 sec * 60 = 1min) * 60 = 1h) * 24 = 24h) * 7 = 7d
-                }
-            });
 
             if(typeof options.onStart === 'function'){
         		options.onStart(file);
@@ -65,6 +57,7 @@ angular
             }
 
             var awsReqOptions = {
+                Bucket: creds.bucket,
                 Key: options.uploadPath+filename,
                 ContentType: file.type,
                 Body: file,
@@ -75,7 +68,14 @@ angular
                 awsReqOptions.ACL = options.filePermissions;
             }
 
-            bucket.putObject(awsReqOptions, function(err, data) {
+            var s3 = new AWS.S3.ManagedUpload({
+                params: awsReqOptions,
+                httpOptions: {
+                    timeout: (((1000 * 60) * 60) * 24) * 7 //(((1 sec * 60 = 1min) * 60 = 1h) * 24 = 24h) * 7 = 7d
+                }
+            });
+
+            s3.send(function(err, data) {
                 if(err){
                     // There Was An Error With Your S3 Config
                     if(typeof options.onError === 'function'){
@@ -89,11 +89,13 @@ angular
                 		options.onSuccess('https://'+creds.bucket+'.s3.amazonaws.com/'+options.uploadPath+encodeURIComponent(filename), file);
                 	}
                 }
-            })
-            .on('httpUploadProgress',function(progress, file) {
+            });
+
+            s3.on('httpUploadProgress',function(progress, file) {
                 // Log Progress Information
                 if(typeof options.onProgress === 'function'){
-                	options.onProgress(Math.round(progress.loaded / progress.total * 100));
+                    var percentage = Math.round(progress.loaded / progress.total * 100);
+                	options.onProgress(percentage, progress.loaded, progress.total);
                 }
             });
 		};

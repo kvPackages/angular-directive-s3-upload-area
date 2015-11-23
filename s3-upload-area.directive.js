@@ -93,7 +93,11 @@ angular
                                 })
                             };
                             scope.helper.uploading = false;
-                            scope.helper.uploadProgress = 0;
+                            scope.helper.uploadProgress = {
+                                percentage: 0,
+                                loadedKb: 0,
+                                totalKb: 0
+                            };
                         });
                     },
                     onSuccess: function(url, file){
@@ -103,13 +107,21 @@ angular
                                 desc: msgHelper.get('success', 'desc', {})
                             };
                             scope.helper.uploading = false;
-                            scope.helper.uploadProgress = 0;
+                            scope.helper.uploadProgress = {
+                                percentage: 0,
+                                loadedKb: 0,
+                                totalKb: 0
+                            };
                             scope.onSuccess({ url: url, file: file });
                         });
                     },
-                    onProgress: function(percentage){
+                    onProgress: function(percentage, loadedBytes, totalBytes){
                         scope.$apply(function(){
-                            scope.helper.uploadProgress = percentage;
+                            scope.helper.uploadProgress = {
+                                percentage: percentage,
+                                loadedKb: Math.round(loadedBytes/1024),
+                                totalKb: Math.round(totalBytes/1024)
+                            };
                         });
                     }
                 });
@@ -153,7 +165,11 @@ angular
                         desc: msgHelper.get('default', 'desc', {})
                     },
                     uploading: false,
-                    uploadProgress: 0,
+                    uploadProgress: {
+                        percentage: 0,
+                        loadedKb: 0,
+                        totalKb: 0
+                    },
                     onFileDrop: function(files){
                         uploadFile(files[0]);
                     },
